@@ -1,32 +1,18 @@
 'use strict';
 
-/* 
-	Таймер пиццы
-	Сделать таймер пиццы (функция, принимающая время),
-	который будет выводить в консоль секунды,
-	оставшиесся до готовности пиццы и собощения по готовности.
-	00:04
-	00:03
-	00:02
-	00:01
-	00:00
-	!!!!
-*/
+const User = function (email, password) {
+	this.email = email;
+	this.password = password + '%%%';
+};
 
-function pizzaTimer(ms) {
-	const end = new Date().getTime() + ms;
-	const interval = setInterval(() => {
-		console.log(
-			new Intl.DateTimeFormat('ru-RU', {
-				minute: 'numeric',
-				second: 'numeric',
-			}).format(end + 100 - new Date())
-		);
-	}, 1000);
-	setTimeout(() => {
-		clearInterval(interval);
-		console.log('!!!!');
-	}, ms);
-}
+const user1 = new User('a@a.ru', '123');
+console.log(user1);
+const user2 = new User('a2@a.ru', '1234');
+console.log(user2);
+console.log(user2 instanceof User);
 
-pizzaTimer(5000);
+// Создаётся пустой объект
+// Вызывается User функция
+// this = пустому объекту
+// Объект связывается с prototype
+// Возвращается объект
