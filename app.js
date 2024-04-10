@@ -1,40 +1,30 @@
 'use strict';
 
-/* Абстракция VS Инкапсуляция 
-	- Название
-	- Режиссёр
-	- Наш рейтинг
-	- Длительность
-	- Страна произоводства
-	- Актёры
-	- Трейлер
-	...
-*/
+const Book = function (title, author) {
+	this.title = title;
+	this.author = author;
+};
 
-class Film {
-	#name;
-	#author;
-	rating;
-	#length;
+Book.prototype.buy = function () {
+	console.log('Buy');
+};
 
-	constructor(name, author, length) {
-		this.#name = name;
-		this.#author = author;
-		this.#length = length;
-	}
+const AudioBook = function (title, author, lenMin) {
+	Book.call(this, title, author);
+	this.lenMin = lenMin;
+};
 
-	get name() {
-		return this.#name;
-	}
+AudioBook.prototype = Object.create(Book.prototype);
+AudioBook.prototype.constructor = AudioBook;
 
-	get author() {
-		return this.#author;
-	}
+AudioBook.prototype.log = function () {
+	console.log(`${this.title} - ${this.lenMin}`);
+};
 
-	get length() {
-		return this.#length;
-	}
-}
+const book = new AudioBook('Lord Of The Rings', 'Tolkein', 20 * 60);
+book.log();
+book.buy();
+console.log(book);
 
-const film = new Film('Avatar', 'Cameron', 240);
-console.log(film);
+console.log(book instanceof AudioBook);
+console.log(book instanceof Book);
