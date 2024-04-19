@@ -1,32 +1,24 @@
 'use strict';
 
-/* 
-	Сделать функцию myFetch, которая выполняет внутри XMLHttpRequest
-*/
+async function getProducts() {
+	// fetch('https://dummyjson.com/products')
+	// 	.then(response => response.json())
+	// 	.then(data => console.log(data));
 
-function myFetch(url) {
-	return new Promise((resolve, reject) => {
-		const request = new XMLHttpRequest();
-		request.open('GET', url);
-		request.send();
+	const productsResponse = await fetch(
+		'https://dummyjson.com/products/'
+	);
 
-		request.addEventListener('load', function () {
-			if (this.status > 400) {
-				reject(new Error(this.status));
-			}
-			resolve(this.responseText);
-		});
+	const { products } = await productsResponse.json();
+	console.log(products);
 
-		request.addEventListener('error', function () {
-			reject(new Error(this.status));
-		});
+	const productResponse = await fetch(
+		'https://dummyjson.com/products/' + products[0].id
+	);
 
-		request.addEventListener('timeout', function () {
-			reject(new Error('Timeout'));
-		});
-	});
+	const product = await productResponse.json();
+	console.log(product);
 }
 
-myFetch('https://dummyjson.com/products')
-	.then(data => console.log(JSON.parse(data)))
-	.catch(error => console.error(error));
+getProducts();
+console.log('End');
