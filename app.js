@@ -1,29 +1,23 @@
 'use strict';
 
-console.log(document.head);
-console.log(document.body);
+function generate(event) {
+	const button = document.querySelector('.button');
+	const el = document.querySelector('.down');
+	const rect = el.getBoundingClientRect();
 
-const el = document.querySelector('.wrapper');
-const el2 = document.querySelectorAll('meta');
-console.log(el);
-console.log(el2);
-const el3 = document.getElementsByClassName('wrapper');
-const el4 = document.getElementsByTagName('meta');
-console.log(el3[0]);
-console.log(el4);
+	console.log(button.getBoundingClientRect());
+	console.log(rect);
 
-const button = document.createElement('button');
-button.innerHTML = 'тест';
+	console.log(`X offset: ${window.scrollX}`);
+	console.log(`Y offset: ${window.scrollY}`);
+	console.log(`clientWidth: ${document.documentElement.clientWidth}`);
+	console.log(
+		`clientHeight: ${document.documentElement.clientHeight}`
+	);
 
-const button2 = document.createElement('button');
-button2.innerHTML = 'тест2';
-
-el.append(button);
-// el.prepend(button2);
-// el.before(button2);
-el.after(button2);
-
-function generate() {
-	console.log(el.parentNode);
-	el.remove();
+	window.scrollTo({
+		left: window.scrollX + rect.left,
+		top: window.scrollY + rect.top,
+		behavior: 'smooth',
+	});
 }
