@@ -1,23 +1,14 @@
 'use strict';
 
-function generate(event) {
-	const button = document.querySelector('.button');
-	const el = document.querySelector('.down');
-	const rect = el.getBoundingClientRect();
+const button = document.querySelector('.button');
 
-	console.log(button.getBoundingClientRect());
-	console.log(rect);
+const eventHandler = function (event) {
+	console.log('Event 1');
+};
 
-	console.log(`X offset: ${window.scrollX}`);
-	console.log(`Y offset: ${window.scrollY}`);
-	console.log(`clientWidth: ${document.documentElement.clientWidth}`);
-	console.log(
-		`clientHeight: ${document.documentElement.clientHeight}`
-	);
+button.addEventListener('mouseover', eventHandler);
 
-	window.scrollTo({
-		left: window.scrollX + rect.left,
-		top: window.scrollY + rect.top,
-		behavior: 'smooth',
-	});
-}
+button.addEventListener('click', event => {
+	console.log('Event 2');
+	button.removeEventListener('click', eventHandler);
+});
