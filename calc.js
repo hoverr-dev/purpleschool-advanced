@@ -1,20 +1,13 @@
 'use strict';
 
-const APP = {};
+function add(f, s) {
+	return f + s;
+}
 
-(function () {
-	const a = 1;
+function sub(f, s) {
+	return f - s;
+}
 
-	function add(f, s) {
-		return f + s;
-	}
+console.log('test');
 
-	function sub(f, s) {
-		return f - s;
-	}
-
-	APP.calc = {
-		add,
-		sub,
-	};
-})();
+module.exports = { add, sub };
