@@ -1194,6 +1194,16 @@
 			this.cardState = cardState;
 		}
 
+		#addToFavorites() {
+			this.appState.favorites.push(this.cardState);
+		}
+
+		#deleteFromFavorites() {
+			this.appState.favorites = this.appState.favorites.filter(
+				b => b.key !== this.cardState.key
+			);
+		}
+
 		render() {
 			this.el.classList.add('card');
 			const existInFavorites = this.appState.favorites.find(
@@ -1225,13 +1235,26 @@
 					}">
 					${
 						existInFavorites
-							? '<img src="/static/favorites.svg" />'
-							: '<img src="/static/favorites-white.svg" />'
+							? '<img src="/static/favorites.svg" alt="Иконка избранного"/>'
+							: '<img src="/static/favorites-white.svg" alt="Иконка избранного"/>'
 					}
 					</button>
 				</div>
 			</div>
 		`;
+			if (existInFavorites) {
+				this.el
+					.querySelector('button')
+					.addEventListener(
+						'click',
+						this.#deleteFromFavorites.bind(this)
+					);
+			} else {
+				this.el
+					.querySelector('button')
+					.addEventListener('click', this.#addToFavorites.bind(this));
+			}
+
 			return this.el;
 		}
 	}
@@ -1281,7 +1304,7 @@
 
 		appStateHook(path) {
 			if (path === 'favorites') {
-				console.log(path);
+				this.render();
 			}
 		}
 
