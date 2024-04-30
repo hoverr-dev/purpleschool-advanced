@@ -1187,6 +1187,26 @@
 		}
 	}
 
+	class CardList extends DivComponent {
+		constructor(appState, parentState) {
+			super();
+			this.appState = appState;
+			this.parentState = parentState;
+		}
+
+		render() {
+			if (this.parentState.loading) {
+				this.el.innerHTML = `<div class="card_list__loader">Загрузка...</div>`;
+				return this.el;
+			}
+			this.el.classList.add('card_list');
+			this.el.innerHTML = `
+			<h1>Найдено книг - ${this.parentState.list.length}</h1>
+		`;
+			return this.el;
+		}
+	}
+
 	class MainView extends AbstractView {
 		state = {
 			list: [],
@@ -1222,6 +1242,10 @@
 				this.state.loading = false;
 				this.state.list = data.docs;
 			}
+
+			if (path === 'list' || path === 'loading') {
+				this.render();
+			}
 		}
 
 		async loadList(q, offset) {
@@ -1234,6 +1258,7 @@
 		render() {
 			const main = document.createElement('div');
 			main.append(new Search(this.state).render());
+			main.append(new CardList(this.appState, this.state).render());
 			this.app.innerHTML = '';
 			this.app.append(main);
 			this.renderHeader();
